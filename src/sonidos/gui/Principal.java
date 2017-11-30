@@ -120,7 +120,7 @@ public class Principal extends JFrame {
 		contentPane.add(panel_1, BorderLayout.NORTH);
 		
 		JButton btnNewAudio = new JButton("Nuevo");
-		ImageIcon icon = new ImageIcon("C:\\Users\\betom\\workspace\\sonidos\\recursos.icon\\new_add_insert_file_13948.png");
+		ImageIcon icon = new ImageIcon(Principal.class.getResource("/recursos/ico/new_add_insert_file_13948.png"));
 		Image img = icon.getImage();
 		Image otraimg = img.getScaledInstance(20,20,java.awt.Image.SCALE_SMOOTH); 
 		ImageIcon otroicon = new ImageIcon(otraimg);
@@ -137,14 +137,14 @@ public class Principal extends JFrame {
 		textField.setColumns(10);
 		
 		JButton btnSearch = new JButton("");
-		icon = new ImageIcon("C:\\Users\\betom\\workspace\\sonidos\\recursos.icon\\Feedbin-Icon-home-search.svg.png");
+		icon = new ImageIcon(Principal.class.getResource("/recursos/ico/Feedbin-Icon-home-search.svg.png"));
 		img = icon.getImage();
 		otraimg = img.getScaledInstance(10,10,java.awt.Image.SCALE_SMOOTH); 
 		otroicon = new ImageIcon(otraimg);
 		btnSearch.setIcon(otroicon);
 		
 		JLabel lblA = new JLabel("");
-		lblA.setIcon(new ImageIcon("C:\\Users\\betom\\workspace\\sonidos\\recursos.icon\\profile_logged_default.png"));
+		lblA.setIcon(new ImageIcon(Principal.class.getResource("/recursos/ico/profile_logged_default.png")));
 		
 		
 		GroupLayout gl_panel_1 = new GroupLayout(panel_1);
@@ -196,7 +196,7 @@ public class Principal extends JFrame {
 			}
 		});
 		lblNewLabel.setBorder(new SoftBevelBorder(BevelBorder.LOWERED, null, null, null, null));
-		lblNewLabel.setIcon(new ImageIcon("C:\\Users\\betom\\workspace\\sonidos\\recursos.icon\\resonance_audio_logo_large.png"));
+		lblNewLabel.setIcon(new ImageIcon(Principal.class.getResource("/recursos/ico/resonance_audio_logo_large.png")));
 		
 		JLabel lblNewLabel_1 = new JLabel("Titulo");
 		lblNewLabel_1.addMouseListener(new MouseAdapter() {
