@@ -14,6 +14,9 @@ import java.awt.GridBagLayout;
 import java.awt.GridBagConstraints;
 import java.awt.Insets;
 import net.miginfocom.swing.MigLayout;
+import sonidos.op.ConexionBD;
+import sonidos.op.Sonido;
+
 import java.awt.FlowLayout;
 import java.awt.CardLayout;
 import com.jgoodies.forms.layout.FormLayout;
@@ -41,6 +44,7 @@ import javax.swing.border.BevelBorder;
 import java.awt.Font;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.ArrayList;
 
 public class Principal extends JFrame {
 
@@ -90,6 +94,32 @@ public class Principal extends JFrame {
 		JButton btnPeople = new JButton("Personas");
 		
 		JButton btnOut = new JButton("Cerrar Sesión");
+		btnOut.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				//REGISTRAR SONIDO
+				/*Sonido sonido = new Sonido("TituloDemo","ImnagenDemo","AudioDemo","Animales",1);
+				sonido.guardar();*/
+				
+				//OBTENER SONIDO
+				/*Sonido sonido = Sonido.buscarPorId(1);
+				System.out.println(sonido.getTitulo());*/
+				
+				//OBTENER SONIDOS
+				/*ArrayList<Sonido> sonidos = Sonido.buscarPorTipo("animales");
+				System.out.println(sonidos.size());*/
+				
+				/*ArrayList<Sonido> sonidos = Sonido.buscarPorIdCliente(1);
+				System.out.println(sonidos.size());*/
+				
+				//ACTUALIZAR SONIDO
+				/*Sonido sonido = Sonido.buscarPorId(7);				
+				sonido.setTitulo("Titulo Modificado");
+				sonido.guardar();*/
+				
+				//ELIMINAR SONIDO
+				//System.out.println(Sonido.eliminar(7));
+			}
+		});
 		GroupLayout gl_panel = new GroupLayout(panel);
 		gl_panel.setHorizontalGroup(
 			gl_panel.createParallelGroup(Alignment.LEADING)
