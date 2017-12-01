@@ -15,6 +15,9 @@ import java.awt.Font;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.JButton;
 import com.jgoodies.forms.factories.DefaultComponentFactory;
+
+import sonidos.op.Clase;
+
 import javax.swing.border.SoftBevelBorder;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.border.BevelBorder;
@@ -26,6 +29,7 @@ import java.awt.Choice;
 import javax.swing.JList;
 import javax.swing.JOptionPane;
 import javax.swing.AbstractListModel;
+import javax.swing.ComboBoxModel;
 import javax.swing.JComboBox;
 import javax.swing.JFileChooser;
 import javax.swing.DefaultComboBoxModel;
@@ -33,6 +37,7 @@ import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.awt.event.ActionEvent;
 
 public class CargarSonido extends JFrame {
@@ -84,9 +89,12 @@ public class CargarSonido extends JFrame {
 		contentPane.add(textField_1); 
 		textField_1.setColumns(10);
 		
+		ArrayList<Clase> clases = Clase.getAll();
 		JComboBox comboBox = new JComboBox();
 		comboBox.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		comboBox.setModel(new DefaultComboBoxModel(new String[] {"Ciudad", "Naturaleza", "Animales", "Personas"}));
+		for (int i = 0; i < clases.size(); i++) {
+			comboBox.addItem(clases.get(i).getClase());
+		}		
 		
 		JLabel lblNewLabel = new JLabel("Tipo");
 		lblNewLabel.setHorizontalAlignment(SwingConstants.RIGHT);

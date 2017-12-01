@@ -5,22 +5,32 @@ import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+
+import sonidos.op.Cliente;
+
 import javax.swing.JTextField;
 import javax.swing.JLabel;
 import javax.swing.JCheckBox;
 import javax.swing.JPasswordField;
 import javax.swing.JButton;
+import java.awt.event.ActionListener;
+import java.awt.event.FocusEvent;
+import java.awt.event.FocusListener;
+import java.awt.event.ActionEvent;
+import java.awt.event.FocusAdapter;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 
 public class Registro extends JFrame {
 
 	private JPanel contentPane;
-	private JTextField textField;
-	private JTextField textField_1;
-	private JTextField textField_2;
-	private JTextField textField_3;
-	private JPasswordField passwordField;
-	private JPasswordField passwordField_1;
-
+	private JTextField txtName;
+	private JTextField txtLastname;
+	private JTextField txtUser;
+	private JTextField txtEmail;
+	private JPasswordField txtPass;
+	private JPasswordField txtConfirmPass;
+	
 	/**
 	 * Launch the application.
 	 */
@@ -41,6 +51,21 @@ public class Registro extends JFrame {
 	 * Create the frame.
 	 */
 	public Registro() {
+		addWindowListener(new WindowAdapter() {
+			@Override
+			public void windowClosing(WindowEvent e) {
+				Login login = new Login();
+				login.setVisible(true);
+			}
+		});
+		addFocusListener(new FocusAdapter() {
+			@Override
+			public void focusLost(FocusEvent e) {
+				Registro reg = (Registro)e.getSource();
+				reg.toFront();
+				reg.getFocusableWindowState();
+			}
+		});
 		setTitle("Registro");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 451, 340);
@@ -49,19 +74,19 @@ public class Registro extends JFrame {
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
-		textField = new JTextField();
-		textField.setBounds(180, 15, 197, 20);
-		contentPane.add(textField);
-		textField.setColumns(10);
+		txtName = new JTextField();
+		txtName.setBounds(180, 15, 197, 20);
+		contentPane.add(txtName);
+		txtName.setColumns(10);
 		
 		JLabel lblNombre = new JLabel("Nombre:");
 		lblNombre.setBounds(100, 18, 70, 14);
 		contentPane.add(lblNombre);
 		
-		textField_1 = new JTextField();
-		textField_1.setBounds(180, 46, 197, 20);
-		contentPane.add(textField_1);
-		textField_1.setColumns(10);
+		txtLastname = new JTextField();
+		txtLastname.setBounds(180, 46, 197, 20);
+		contentPane.add(txtLastname);
+		txtLastname.setColumns(10);
 		
 		JLabel lblApellidos = new JLabel("Apellidos:");
 		lblApellidos.setBounds(95, 49, 75, 14);
@@ -71,19 +96,19 @@ public class Registro extends JFrame {
 		lblNombreDeUsuario.setBounds(10, 80, 160, 14);
 		contentPane.add(lblNombreDeUsuario);
 		
-		textField_2 = new JTextField();
-		textField_2.setBounds(180, 77, 197, 20);
-		contentPane.add(textField_2);
-		textField_2.setColumns(10);
+		txtUser = new JTextField();
+		txtUser.setBounds(180, 77, 197, 20);
+		contentPane.add(txtUser);
+		txtUser.setColumns(10);
 		
 		JLabel lblCorreoElectrnico = new JLabel("Correo Electr\u00F3nico:");
 		lblCorreoElectrnico.setBounds(49, 112, 121, 14);
 		contentPane.add(lblCorreoElectrnico);
 		
-		textField_3 = new JTextField();
-		textField_3.setBounds(180, 108, 197, 20);
-		contentPane.add(textField_3);
-		textField_3.setColumns(10);
+		txtEmail = new JTextField();
+		txtEmail.setBounds(180, 108, 197, 20);
+		contentPane.add(txtEmail);
+		txtEmail.setColumns(10);
 		
 		JLabel lblContrasea = new JLabel("Contrase\u00F1a:");
 		lblContrasea.setBounds(81, 143, 89, 14);
@@ -93,20 +118,45 @@ public class Registro extends JFrame {
 		lblRepiteLaContrasea.setBounds(34, 174, 136, 14);
 		contentPane.add(lblRepiteLaContrasea);
 		
-		JCheckBox chckbxAceptoLosTrminos = new JCheckBox("He le\u00EDdo y acepto los t\u00E9rminos y condiciones de la aplicaci\u00F3n");
-		chckbxAceptoLosTrminos.setBounds(49, 218, 367, 23);
-		contentPane.add(chckbxAceptoLosTrminos);
+		JCheckBox checkBox = new JCheckBox("He le\u00EDdo y acepto los t\u00E9rminos y condiciones de la aplicaci\u00F3n");
+		checkBox.setBounds(49, 218, 367, 23);
+		contentPane.add(checkBox);
 		
-		passwordField = new JPasswordField();
-		passwordField.setBounds(180, 139, 197, 20);
-		contentPane.add(passwordField);
+		txtPass = new JPasswordField();
+		txtPass.setBounds(180, 139, 197, 20);
+		contentPane.add(txtPass);
 		
-		passwordField_1 = new JPasswordField();
-		passwordField_1.setBounds(180, 171, 197, 20);
-		contentPane.add(passwordField_1);
+		txtConfirmPass = new JPasswordField();
+		txtConfirmPass.setBounds(180, 171, 197, 20);
+		contentPane.add(txtConfirmPass);
 		
-		JButton btnNewButton = new JButton("Registrarme");
-		btnNewButton.setBounds(103, 256, 225, 34);
-		contentPane.add(btnNewButton);
+		JButton btnSave = new JButton("Registrarme");
+		btnSave.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				String nombre = txtName.getText();
+				String apellidos = txtLastname.getText();
+				String usuario = txtUser.getText();
+				String correo = txtEmail.getText();
+				String pass = txtPass.getText();
+				String confirmPass = txtConfirmPass.getText();
+								
+				if (nombre.trim() != "" && apellidos.trim() != "" && usuario.trim() != "" &&
+					correo.trim() != "" && pass.trim() != "" && pass.trim() == confirmPass.trim()) {
+					Cliente cli = new Cliente(usuario, nombre, apellidos, pass, correo);
+					if (cli.guardar() > 0) {
+						if (Cliente.login(cli.getUsuario(), cli.getContrasena())) {
+							Principal prin = new Principal();
+							prin.setVisible(true);
+							dispose();
+						}
+					}
+				}
+				else{
+					
+				}
+			}
+		});
+		btnSave.setBounds(103, 256, 225, 34);
+		contentPane.add(btnSave);
 	}
 }

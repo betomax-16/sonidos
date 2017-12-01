@@ -16,13 +16,16 @@ import javax.swing.JLabel;
 import java.awt.Color;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 public class Login extends JFrame {
 
 	private JPanel contentPane;
 	private JTextField txtUser;
 	private JTextField txtPass;
-
+	
+	private static Login frame;
 	/**
 	 * Launch the application.
 	 */
@@ -30,7 +33,7 @@ public class Login extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					Login frame = new Login();
+					frame = new Login();
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -82,6 +85,14 @@ public class Login extends JFrame {
 		contentPane.add(lblNewLabel);
 		
 		JLabel lblnoTienesCuenta = new JLabel("\u00BFNo tienes cuenta? Registrate aqu\u00ED");
+		lblnoTienesCuenta.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent arg0) {
+				Registro reg = new Registro();							
+				reg.setVisible(true);
+				dispose();
+			}
+		});
 		lblnoTienesCuenta.setForeground(Color.BLUE);
 		lblnoTienesCuenta.setBounds(101, 165, 220, 14);
 		contentPane.add(lblnoTienesCuenta);
