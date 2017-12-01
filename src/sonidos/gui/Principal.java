@@ -45,11 +45,14 @@ import java.awt.Font;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
+import java.awt.Color;
+import javax.swing.JList;
+import javax.swing.JMenuItem;
+import java.awt.Frame;
 
 public class Principal extends JFrame {
 
 	private JPanel contentPane;
-	private JTextField textField;
 
 	/**
 	 * Launch the application.
@@ -76,189 +79,95 @@ public class Principal extends JFrame {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
 		contentPane = new JPanel();
-		contentPane.setBackground(UIManager.getColor("ComboBox.selectionBackground"));
+		contentPane.setBackground(Color.WHITE);
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
-		contentPane.setLayout(new BorderLayout(0, 0));
 		setContentPane(contentPane);
+		contentPane.setLayout(null);
 		
 		JPanel panel = new JPanel();
-		panel.setBackground(UIManager.getColor("InternalFrame.activeTitleGradient"));
-		contentPane.add(panel, BorderLayout.WEST);
+		panel.setBounds(0, 36, 244, 242);
+		contentPane.add(panel);
+		panel.setLayout(null);
 		
-		JButton btnNature = new JButton("Naturaleza");
+		JButton btnNewButton = new JButton("Personas");
+		btnNewButton.setBounds(0, 43, 244, 50);
+		panel.add(btnNewButton);
 		
-		JButton btnCity = new JButton("Ciudad");
+		JButton btnNaturaleza = new JButton("Naturaleza");
+		btnNaturaleza.setBounds(0, 93, 244, 50);
+		panel.add(btnNaturaleza);
 		
-		JButton btnAnimals = new JButton("Animales");
+		JButton btnCiudad = new JButton("Ciudad");
+		btnCiudad.setBounds(0, 143, 244, 50);
+		panel.add(btnCiudad);
 		
-		JButton btnPeople = new JButton("Personas");
-		
-		JButton btnOut = new JButton("Cerrar Sesión");
-		btnOut.addActionListener(new ActionListener() {
+		JButton btnAnimales = new JButton("Animales");
+		btnAnimales.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				//REGISTRAR SONIDO
-				/*Sonido sonido = new Sonido("TituloDemo","ImnagenDemo","AudioDemo","Animales",1);
-				sonido.guardar();*/
-				
-				//OBTENER SONIDO
-				/*Sonido sonido = Sonido.buscarPorId(1);
-				System.out.println(sonido.getTitulo());*/
-				
-				//OBTENER SONIDOS
-				/*ArrayList<Sonido> sonidos = Sonido.buscarPorTipo("animales");
-				System.out.println(sonidos.size());*/
-				
-				/*ArrayList<Sonido> sonidos = Sonido.buscarPorIdCliente(1);
-				System.out.println(sonidos.size());*/
-				
-				//ACTUALIZAR SONIDO
-				/*Sonido sonido = Sonido.buscarPorId(7);				
-				sonido.setTitulo("Titulo Modificado");
-				sonido.guardar();*/
-				
-				//ELIMINAR SONIDO
-				//System.out.println(Sonido.eliminar(7));
 			}
 		});
-		GroupLayout gl_panel = new GroupLayout(panel);
-		gl_panel.setHorizontalGroup(
-			gl_panel.createParallelGroup(Alignment.LEADING)
-				.addComponent(btnCity, GroupLayout.DEFAULT_SIZE, 109, Short.MAX_VALUE)
-				.addComponent(btnPeople, GroupLayout.DEFAULT_SIZE, 109, Short.MAX_VALUE)
-				.addComponent(btnAnimals, GroupLayout.DEFAULT_SIZE, 109, Short.MAX_VALUE)
-				.addComponent(btnNature, GroupLayout.DEFAULT_SIZE, 109, Short.MAX_VALUE)
-				.addComponent(btnOut, GroupLayout.DEFAULT_SIZE, 109, Short.MAX_VALUE)
-		);
-		gl_panel.setVerticalGroup(
-			gl_panel.createParallelGroup(Alignment.LEADING)
-				.addGroup(gl_panel.createSequentialGroup()
-					.addComponent(btnCity, GroupLayout.PREFERRED_SIZE, 33, GroupLayout.PREFERRED_SIZE)
-					.addGap(1)
-					.addComponent(btnNature, GroupLayout.PREFERRED_SIZE, 33, GroupLayout.PREFERRED_SIZE)
-					.addGap(1)
-					.addComponent(btnAnimals, GroupLayout.PREFERRED_SIZE, 33, GroupLayout.PREFERRED_SIZE)
-					.addGap(1)
-					.addComponent(btnPeople, GroupLayout.PREFERRED_SIZE, 33, GroupLayout.PREFERRED_SIZE)
-					.addGap(1)
-					.addComponent(btnOut, GroupLayout.PREFERRED_SIZE, 33, GroupLayout.PREFERRED_SIZE)
-					.addContainerGap(42, Short.MAX_VALUE))
-		);
-		panel.setLayout(gl_panel);
+		btnAnimales.setBounds(0, 192, 244, 50);
+		panel.add(btnAnimales);
+		
+		JLabel lblClasesPorDefecto = new JLabel("Clases por Defecto");
+		lblClasesPorDefecto.setBounds(10, 18, 145, 14);
+		panel.add(lblClasesPorDefecto);
+		
+		JScrollPane scrollPane = new JScrollPane();
+		scrollPane.setBounds(490, 292, -120, -96);
+		contentPane.add(scrollPane);
 		
 		JPanel panel_1 = new JPanel();
-		panel_1.setBackground(UIManager.getColor("ComboBox.selectionBackground"));
-		contentPane.add(panel_1, BorderLayout.NORTH);
+		panel_1.setBounds(0, 0, 1354, 37);
+		contentPane.add(panel_1);
+		panel_1.setLayout(null);
 		
-		JButton btnNewAudio = new JButton("Nuevo");
+		JMenu mnNewMenu = new JMenu("Agregar Sonido");
+		mnNewMenu.setBounds(0, 0, 164, 37);
+		panel_1.add(mnNewMenu);
+		
+		JPanel panel_2 = new JPanel();
+		panel_2.setBounds(0, 278, 244, 437);
+		contentPane.add(panel_2);
+		panel_2.setLayout(null);
+		
+		JLabel lblNewLabel = new JLabel("Clases Personalizadas");
+		lblNewLabel.setBounds(10, 11, 145, 14);
+		panel_2.add(lblNewLabel);
+		
+		JButton button = new JButton("+");
+		button.setBounds(177, 3, 41, 31);
+		panel_2.add(button);
+		
+		JPanel panel_3 = new JPanel();
+		panel_3.setBounds(241, 36, 1113, 679);
+		contentPane.add(panel_3);
+		panel_3.setLayout(null);
+		
+		JInternalFrame internalFrame = new JInternalFrame("New JInternalFrame");
+		internalFrame.setBounds(556, 5, 1, 1);
+		panel_3.add(internalFrame);
+		internalFrame.setUI(null);
+		
+		JPanel panel_4 = new JPanel();
+		panel_4.setBackground(Color.BLACK);
+		panel_4.setForeground(Color.BLACK);
+		panel_4.setBounds(10, 541, 1093, 127);
+		panel_3.add(panel_4);
+		panel_4.setLayout(null);
+		
+		JButton btnNewButton_1 = new JButton("New button");
+		btnNewButton_1.setIcon(new ImageIcon(Principal.class.getResource("/recursos/ico/play.png")));
+		btnNewButton_1.setBounds(502, 11, 173, 105);
+		panel_4.add(btnNewButton_1);
+		internalFrame.setVisible(true);
 		ImageIcon icon = new ImageIcon(Principal.class.getResource("/recursos/ico/new_add_insert_file_13948.png"));
 		Image img = icon.getImage();
 		Image otraimg = img.getScaledInstance(20,20,java.awt.Image.SCALE_SMOOTH); 
 		ImageIcon otroicon = new ImageIcon(otraimg);
-		btnNewAudio.setIcon(otroicon);
-		btnNewAudio.setBackground(UIManager.getColor("InternalFrame.activeTitleBackground"));
-		btnNewAudio.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-			}
-		});
-		
-		JLabel lbUserName = new JLabel("UserName");
-		
-		textField = new JTextField();
-		textField.setColumns(10);
-		
-		JButton btnSearch = new JButton("");
 		icon = new ImageIcon(Principal.class.getResource("/recursos/ico/Feedbin-Icon-home-search.svg.png"));
 		img = icon.getImage();
 		otraimg = img.getScaledInstance(10,10,java.awt.Image.SCALE_SMOOTH); 
 		otroicon = new ImageIcon(otraimg);
-		btnSearch.setIcon(otroicon);
-		
-		JLabel lblA = new JLabel("");
-		lblA.setIcon(new ImageIcon(Principal.class.getResource("/recursos/ico/profile_logged_default.png")));
-		
-		
-		GroupLayout gl_panel_1 = new GroupLayout(panel_1);
-		gl_panel_1.setHorizontalGroup(
-			gl_panel_1.createParallelGroup(Alignment.LEADING)
-				.addGroup(gl_panel_1.createSequentialGroup()
-					.addGroup(gl_panel_1.createParallelGroup(Alignment.LEADING)
-						.addGroup(gl_panel_1.createSequentialGroup()
-							.addGap(122)
-							.addComponent(textField, GroupLayout.PREFERRED_SIZE, 150, GroupLayout.PREFERRED_SIZE))
-						.addComponent(btnNewAudio, GroupLayout.PREFERRED_SIZE, 113, GroupLayout.PREFERRED_SIZE))
-					.addGap(1)
-					.addComponent(btnSearch, GroupLayout.PREFERRED_SIZE, 24, GroupLayout.PREFERRED_SIZE)
-					.addPreferredGap(ComponentPlacement.RELATED, 16, Short.MAX_VALUE)
-					.addComponent(lblA)
-					.addGap(15)
-					.addComponent(lbUserName)
-					.addContainerGap())
-		);
-		gl_panel_1.setVerticalGroup(
-			gl_panel_1.createParallelGroup(Alignment.LEADING)
-				.addGroup(gl_panel_1.createSequentialGroup()
-					.addGroup(gl_panel_1.createParallelGroup(Alignment.LEADING)
-						.addComponent(lblA)
-						.addGroup(gl_panel_1.createSequentialGroup()
-							.addGap(8)
-							.addGroup(gl_panel_1.createParallelGroup(Alignment.LEADING)
-								.addComponent(btnSearch)
-								.addGroup(gl_panel_1.createParallelGroup(Alignment.BASELINE)
-									.addComponent(textField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-									.addComponent(btnNewAudio, GroupLayout.PREFERRED_SIZE, 19, GroupLayout.PREFERRED_SIZE))))
-						.addGroup(gl_panel_1.createSequentialGroup()
-							.addContainerGap()
-							.addComponent(lbUserName)))
-					.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-		);
-		panel_1.setLayout(gl_panel_1);
-		
-		JInternalFrame internalFrameAudios = new JInternalFrame("Audios");
-		internalFrameAudios.setBorder(null);
-		internalFrameAudios.getContentPane().setBackground(UIManager.getColor("InternalFrame.activeTitleBackground"));
-		
-		JLabel lblNewLabel = new JLabel("");
-		lblNewLabel.addMouseListener(new MouseAdapter() {
-			@SuppressWarnings("deprecation")
-			@Override
-			public void mouseEntered(MouseEvent arg0) {
-				lblNewLabel.setCursor(new Cursor(HAND_CURSOR));
-			}
-		});
-		lblNewLabel.setBorder(new SoftBevelBorder(BevelBorder.LOWERED, null, null, null, null));
-		lblNewLabel.setIcon(new ImageIcon(Principal.class.getResource("/recursos/ico/resonance_audio_logo_large.png")));
-		
-		JLabel lblNewLabel_1 = new JLabel("Titulo");
-		lblNewLabel_1.addMouseListener(new MouseAdapter() {
-			@SuppressWarnings("deprecation")
-			@Override
-			public void mouseEntered(MouseEvent e) {
-				lblNewLabel_1.setCursor(new Cursor(HAND_CURSOR));
-			}
-		});
-		lblNewLabel_1.setHorizontalAlignment(SwingConstants.CENTER);
-		lblNewLabel_1.setFont(new Font("Tahoma", Font.BOLD, 13));
-		GroupLayout groupLayout = new GroupLayout(internalFrameAudios.getContentPane());
-		groupLayout.setHorizontalGroup(
-			groupLayout.createParallelGroup(Alignment.LEADING)
-				.addGroup(groupLayout.createSequentialGroup()
-					.addGap(36)
-					.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING, false)
-						.addComponent(lblNewLabel_1, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 134, Short.MAX_VALUE)
-						.addComponent(lblNewLabel, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-					.addGap(1073))
-		);
-		groupLayout.setVerticalGroup(
-			groupLayout.createParallelGroup(Alignment.LEADING)
-				.addGroup(groupLayout.createSequentialGroup()
-					.addGap(43)
-					.addComponent(lblNewLabel)
-					.addPreferredGap(ComponentPlacement.UNRELATED)
-					.addComponent(lblNewLabel_1)
-					.addContainerGap(423, Short.MAX_VALUE))
-		);
-		internalFrameAudios.getContentPane().setLayout(groupLayout);
-		contentPane.add(internalFrameAudios, BorderLayout.CENTER);
-		internalFrameAudios.setVisible(true);
 	}
 }

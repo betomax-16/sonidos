@@ -6,12 +6,10 @@ import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
-import javax.swing.JLabel;
 import javax.swing.JTextField;
-import javax.swing.GroupLayout;
-import javax.swing.GroupLayout.Alignment;
-import java.awt.Font;
-import javax.swing.LayoutStyle.ComponentPlacement;
+import javax.swing.JLabel;
+import javax.swing.JCheckBox;
+import javax.swing.JPasswordField;
 import javax.swing.JButton;
 
 public class Registro extends JFrame {
@@ -21,7 +19,8 @@ public class Registro extends JFrame {
 	private JTextField textField_1;
 	private JTextField textField_2;
 	private JTextField textField_3;
-	private JTextField textField_4;
+	private JPasswordField passwordField;
+	private JPasswordField passwordField_1;
 
 	/**
 	 * Launch the application.
@@ -43,108 +42,72 @@ public class Registro extends JFrame {
 	 * Create the frame.
 	 */
 	public Registro() {
-		setTitle("Registro Usuario");
+		setTitle("Registro");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 363, 271);
+		setBounds(100, 100, 451, 340);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
-		
-		JLabel lblNombreUsuario = new JLabel("Nombre Usuario");
-		lblNombreUsuario.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		
-		JLabel lblNombre = new JLabel("Nombre(s)");
-		lblNombre.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		
-		JLabel lblApellidos = new JLabel("Apellidos");
-		lblApellidos.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		
-		JLabel lblContrasea = new JLabel("Contrase\u00F1a");
-		lblContrasea.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		
-		JLabel lblEmail = new JLabel("Email");
-		lblEmail.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		contentPane.setLayout(null);
 		
 		textField = new JTextField();
+		textField.setBounds(180, 15, 197, 20);
+		contentPane.add(textField);
 		textField.setColumns(10);
 		
+		JLabel lblNombre = new JLabel("Nombre:");
+		lblNombre.setBounds(100, 18, 70, 14);
+		contentPane.add(lblNombre);
+		
 		textField_1 = new JTextField();
+		textField_1.setBounds(180, 46, 197, 20);
+		contentPane.add(textField_1);
 		textField_1.setColumns(10);
 		
+		JLabel lblApellidos = new JLabel("Apellidos:");
+		lblApellidos.setBounds(95, 49, 75, 14);
+		contentPane.add(lblApellidos);
+		
+		JLabel lblNombreDeUsuario = new JLabel("Nombre de Usuario (\u00FAnico):");
+		lblNombreDeUsuario.setBounds(10, 80, 160, 14);
+		contentPane.add(lblNombreDeUsuario);
+		
 		textField_2 = new JTextField();
+		textField_2.setBounds(180, 77, 197, 20);
+		contentPane.add(textField_2);
 		textField_2.setColumns(10);
 		
+		JLabel lblCorreoElectrnico = new JLabel("Correo Electr\u00F3nico:");
+		lblCorreoElectrnico.setBounds(49, 112, 121, 14);
+		contentPane.add(lblCorreoElectrnico);
+		
 		textField_3 = new JTextField();
+		textField_3.setBounds(180, 108, 197, 20);
+		contentPane.add(textField_3);
 		textField_3.setColumns(10);
 		
-		textField_4 = new JTextField();
-		textField_4.setColumns(10);
+		JLabel lblContrasea = new JLabel("Contrase\u00F1a:");
+		lblContrasea.setBounds(81, 143, 89, 14);
+		contentPane.add(lblContrasea);
 		
-		JButton btnNewButton = new JButton("Guardar");
-		GroupLayout gl_contentPane = new GroupLayout(contentPane);
-		gl_contentPane.setHorizontalGroup(
-			gl_contentPane.createParallelGroup(Alignment.LEADING)
-				.addGroup(gl_contentPane.createSequentialGroup()
-					.addContainerGap()
-					.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
-						.addGroup(gl_contentPane.createSequentialGroup()
-							.addComponent(lblNombreUsuario, GroupLayout.PREFERRED_SIZE, 101, GroupLayout.PREFERRED_SIZE)
-							.addPreferredGap(ComponentPlacement.UNRELATED)
-							.addComponent(textField, GroupLayout.PREFERRED_SIZE, 206, GroupLayout.PREFERRED_SIZE))
-						.addGroup(gl_contentPane.createSequentialGroup()
-							.addGap(10)
-							.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
-								.addGroup(gl_contentPane.createSequentialGroup()
-									.addComponent(lblContrasea)
-									.addGap(31)
-									.addComponent(textField_3, GroupLayout.PREFERRED_SIZE, 206, GroupLayout.PREFERRED_SIZE))
-								.addGroup(gl_contentPane.createSequentialGroup()
-									.addGap(10)
-									.addComponent(lblApellidos)
-									.addGap(40)
-									.addComponent(textField_2, GroupLayout.PREFERRED_SIZE, 206, GroupLayout.PREFERRED_SIZE))
-								.addGroup(gl_contentPane.createSequentialGroup()
-									.addComponent(lblNombre)
-									.addGap(36)
-									.addComponent(textField_1, GroupLayout.PREFERRED_SIZE, 206, GroupLayout.PREFERRED_SIZE))))
-						.addGroup(gl_contentPane.createSequentialGroup()
-							.addGap(29)
-							.addComponent(lblEmail)
-							.addGap(51)
-							.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
-								.addGroup(gl_contentPane.createSequentialGroup()
-									.addGap(10)
-									.addComponent(btnNewButton))
-								.addComponent(textField_4, GroupLayout.PREFERRED_SIZE, 206, GroupLayout.PREFERRED_SIZE))))
-					.addContainerGap(97, Short.MAX_VALUE))
-		);
-		gl_contentPane.setVerticalGroup(
-			gl_contentPane.createParallelGroup(Alignment.LEADING)
-				.addGroup(gl_contentPane.createSequentialGroup()
-					.addContainerGap()
-					.addGroup(gl_contentPane.createParallelGroup(Alignment.BASELINE)
-						.addComponent(lblNombreUsuario, GroupLayout.PREFERRED_SIZE, 24, GroupLayout.PREFERRED_SIZE)
-						.addComponent(textField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-					.addPreferredGap(ComponentPlacement.UNRELATED)
-					.addGroup(gl_contentPane.createParallelGroup(Alignment.BASELINE)
-						.addComponent(textField_1, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-						.addComponent(lblNombre, GroupLayout.PREFERRED_SIZE, 24, GroupLayout.PREFERRED_SIZE))
-					.addPreferredGap(ComponentPlacement.UNRELATED)
-					.addGroup(gl_contentPane.createParallelGroup(Alignment.BASELINE)
-						.addComponent(textField_2, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-						.addComponent(lblApellidos, GroupLayout.PREFERRED_SIZE, 24, GroupLayout.PREFERRED_SIZE))
-					.addPreferredGap(ComponentPlacement.UNRELATED)
-					.addGroup(gl_contentPane.createParallelGroup(Alignment.BASELINE)
-						.addComponent(textField_3, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-						.addComponent(lblContrasea, GroupLayout.PREFERRED_SIZE, 24, GroupLayout.PREFERRED_SIZE))
-					.addPreferredGap(ComponentPlacement.UNRELATED)
-					.addGroup(gl_contentPane.createParallelGroup(Alignment.BASELINE)
-						.addComponent(textField_4, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-						.addComponent(lblEmail, GroupLayout.PREFERRED_SIZE, 24, GroupLayout.PREFERRED_SIZE))
-					.addPreferredGap(ComponentPlacement.RELATED, 13, Short.MAX_VALUE)
-					.addComponent(btnNewButton)
-					.addContainerGap())
-		);
-		contentPane.setLayout(gl_contentPane);
+		JLabel lblRepiteLaContrasea = new JLabel("Repite la Contrase\u00F1a:");
+		lblRepiteLaContrasea.setBounds(34, 174, 136, 14);
+		contentPane.add(lblRepiteLaContrasea);
+		
+		JCheckBox chckbxAceptoLosTrminos = new JCheckBox("He le\u00EDdo y acepto los t\u00E9rminos y condiciones de la aplicaci\u00F3n");
+		chckbxAceptoLosTrminos.setBounds(49, 218, 367, 23);
+		contentPane.add(chckbxAceptoLosTrminos);
+		
+		passwordField = new JPasswordField();
+		passwordField.setBounds(180, 139, 197, 20);
+		contentPane.add(passwordField);
+		
+		passwordField_1 = new JPasswordField();
+		passwordField_1.setBounds(180, 171, 197, 20);
+		contentPane.add(passwordField_1);
+		
+		JButton btnNewButton = new JButton("Registrarme");
+		btnNewButton.setBounds(103, 256, 225, 34);
+		contentPane.add(btnNewButton);
 	}
 }
