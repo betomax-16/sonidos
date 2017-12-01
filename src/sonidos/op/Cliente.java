@@ -1,6 +1,7 @@
 package sonidos.op;
 
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 
 public class Cliente {
 	private int id;
@@ -41,6 +42,31 @@ public class Cliente {
 			con.close();
 		}
 		return res;
+	}
+	
+	public boolean login(String usuario, String password){
+		ResultSet rs;
+		String query = "select * from clientes where Usuario=? and Contrasena=? ";
+		try{
+			ps = con.getConexion().prepareStatement(query);
+			ps.setString(1, usuario);
+			ps.setString(2, password);
+			rs=ps.executeQuery();
+			
+			if(rs.next()){
+				return true;
+			}
+			else{
+				return false;
+			}
+		}catch (Exception e) {			
+			System.out.println("Error al insertar " + e.getMessage());
+			return false;
+		}
+		finally {
+			ps = null;
+			con.close();
+		}
 	}
 	
 	public void eliminar(){
