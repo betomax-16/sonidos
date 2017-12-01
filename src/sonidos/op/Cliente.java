@@ -44,7 +44,10 @@ public class Cliente {
 		return res;
 	}
 	
-	public boolean login(String usuario, String password){
+	public static boolean login(String usuario, String password){
+		boolean res = false;
+		ConexionBD con = new ConexionBD();
+		PreparedStatement ps;
 		ResultSet rs;
 		String query = "select * from clientes where Usuario=? and Contrasena=? ";
 		try{
@@ -53,20 +56,15 @@ public class Cliente {
 			ps.setString(2, password);
 			rs=ps.executeQuery();
 			
-			if(rs.next()){
-				return true;
-			}
-			else{
-				return false;
-			}
+			res = rs.next();			
 		}catch (Exception e) {			
-			System.out.println("Error al insertar " + e.getMessage());
-			return false;
+			System.out.println("Error al insertar " + e.getMessage());			
 		}
 		finally {
 			ps = null;
 			con.close();
 		}
+		return res;
 	}
 	
 	public void eliminar(){
@@ -74,14 +72,28 @@ public class Cliente {
 	}
 	
 	public static Cliente buscarPorId(int id){
-		String usuario = "";
-		String nombre = "";
-		String apellidos = "";
-		String contrasena = "";
-		String email = "";
-		Cliente cl = new Cliente(usuario, nombre, apellidos, contrasena, email);
-		cl.setId(id);
-		return cl;
+		String query = "select * from clientes WHERE idCliente = ?";
+		ConexionBD con = new ConexionBD();
+		PreparedStatement ps;
+		Cliente newCliente = null;
+		try {
+			ps = con.getConexion().prepareStatement(query);
+			ps.setInt(1, id);
+			ResultSet rs = ps.executeQuery();
+			
+			while (rs.next()) {	
+				String usuario = rs.getString("Usuario");
+				String nombre = rs.getString("Nombre");
+				String apellidos = rs.getString("Apellidos");
+				String email = rs.getString("Correo");
+				newCliente = new Cliente(usuario, nombre, apellidos, "", email);
+				newCliente.setId(rs.getInt("idCliente"));
+			}
+		} catch (Exception e) {
+			System.out.println("Error al consultar sonidos " +  e.getMessage());
+		}
+						
+		return newCliente;
 	}
 	
 	public static void buscarPorTipo(String tipo){
