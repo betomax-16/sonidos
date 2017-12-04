@@ -1,4 +1,4 @@
-package sonidos.gui;
+package sonidos.gui; 
 
 import java.awt.EventQueue;
 
@@ -11,17 +11,17 @@ import sonidos.op.Cliente;
 import javax.swing.JTextField;
 import javax.swing.JLabel;
 import javax.swing.JCheckBox;
+import javax.swing.JDialog;
 import javax.swing.JPasswordField;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.FocusEvent;
-import java.awt.event.FocusListener;
 import java.awt.event.ActionEvent;
 import java.awt.event.FocusAdapter;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
-public class Registro extends JFrame {
+public class Registro extends JDialog {
 
 	private JPanel contentPane;
 	private JTextField txtName;
@@ -38,8 +38,8 @@ public class Registro extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					Registro frame = new Registro();
-					frame.setVisible(true);
+					Registro dialog = new Registro();
+					dialog.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -67,7 +67,7 @@ public class Registro extends JFrame {
 			}
 		});
 		setTitle("Registro");
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 451, 340);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));

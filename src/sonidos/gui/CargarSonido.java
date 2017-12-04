@@ -1,12 +1,7 @@
 package sonidos.gui;
 
-import java.awt.BorderLayout;
 import java.awt.EventQueue;
-import java.awt.FileDialog;
-
-import javax.swing.JFrame;
 import javax.swing.JPanel;
-import javax.swing.border.EmptyBorder;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 import javax.swing.GroupLayout;
@@ -14,33 +9,23 @@ import javax.swing.GroupLayout.Alignment;
 import java.awt.Font;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.JButton;
-import com.jgoodies.forms.factories.DefaultComponentFactory;
-
 import sonidos.op.Clase;
+import sonidos.op.Sonido;
 
 import javax.swing.border.SoftBevelBorder;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.border.BevelBorder;
-import java.awt.List;
 import javax.swing.ImageIcon;
-import java.awt.Label;
 import javax.swing.SwingConstants;
-import java.awt.Choice;
-import javax.swing.JList;
-import javax.swing.JOptionPane;
-import javax.swing.AbstractListModel;
-import javax.swing.ComboBoxModel;
 import javax.swing.JComboBox;
+import javax.swing.JDialog;
 import javax.swing.JFileChooser;
-import javax.swing.DefaultComboBoxModel;
 import java.awt.event.ActionListener;
 import java.io.File;
-import java.io.FileReader;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.awt.event.ActionEvent;
 
-public class CargarSonido extends JFrame {
+public class CargarSonido extends JDialog {
 	
 	private JPanel contentPane;
 	private JTextField textField;
@@ -53,8 +38,8 @@ public class CargarSonido extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					CargarSonido frame = new CargarSonido();
-					frame.setVisible(true);
+					CargarSonido dialog = new CargarSonido();
+					dialog.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -63,9 +48,10 @@ public class CargarSonido extends JFrame {
 	}
 	
 	public CargarSonido() {
+		setModal(true);
 		
 		setTitle("Subir Sonido");
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); 
+		setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE); 
  		setBounds(100, 100, 500, 231); 
 		contentPane = new JPanel(); 
 		setContentPane(contentPane); 
@@ -100,10 +86,6 @@ public class CargarSonido extends JFrame {
 		lblNewLabel.setHorizontalAlignment(SwingConstants.RIGHT);
 		lblNewLabel.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		
-		JButton btnNewButton = new JButton("Guardar");
-		btnNewButton.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		contentPane.add(btnNewButton);
-		
 		JLabel label = new JLabel("");
 		label.setBorder(new SoftBevelBorder(BevelBorder.LOWERED, null, null, null, null));
 		
@@ -136,7 +118,27 @@ public class CargarSonido extends JFrame {
 					File fichero=fc.getSelectedFile();
 					ImageIcon imagen = new ImageIcon(fichero.getAbsolutePath());
 					label.setIcon(imagen);
-					label.setText("");
+					label.setText(fichero.getAbsolutePath());
+				}
+			}
+		});
+		
+		JButton btnNewButton = new JButton("Guardar");
+		btnNewButton.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		contentPane.add(btnNewButton);
+		btnNewButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				String titulo = textField.getText();
+				String imagen = label.getText();
+				String audio = textField_1.getText();
+				String tipo = (String) comboBox.getSelectedItem();
+				int cliente = 1;
+				if (titulo != "" && imagen != "" && audio != "" && tipo != "" && cliente != 0) {
+					Sonido son = new Sonido(titulo, imagen, audio, tipo, cliente);
+					son.guardar();
+				}
+				else{
+					System.out.println("Verificar Datos a Guardar");
 				}
 			}
 		});
