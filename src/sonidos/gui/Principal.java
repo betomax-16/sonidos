@@ -53,7 +53,7 @@ import java.awt.Frame;
 public class Principal extends JFrame {
 
 	private JPanel contentPane;
-
+	private String user;
 	/**
 	 * Launch the application.
 	 */
@@ -61,7 +61,7 @@ public class Principal extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					Principal frame = new Principal();
+					Principal frame = new Principal(null);
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -73,7 +73,9 @@ public class Principal extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public Principal() {
+	public Principal(String user) {
+		this.user = user;
+		new Login().setVisible(false);
 		setExtendedState(Frame.MAXIMIZED_BOTH);
 		setTitle("Perfil");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -125,6 +127,12 @@ public class Principal extends JFrame {
 		JMenu mnNewMenu = new JMenu("Agregar Sonido");
 		mnNewMenu.setBounds(0, 0, 164, 37);
 		panel_1.add(mnNewMenu);
+		
+		JLabel lblUsuario = new JLabel();
+		lblUsuario.setFont(new Font("Tahoma", Font.BOLD, 13));
+		lblUsuario.setBounds(1213, 11, 86, 15);
+		panel_1.add(lblUsuario);
+		lblUsuario.setText(user);
 		
 		JPanel panel_2 = new JPanel();
 		panel_2.setBounds(0, 278, 244, 437);

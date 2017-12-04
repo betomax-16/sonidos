@@ -23,9 +23,14 @@ public class Cliente {
 		con = new ConexionBD();
 	}
 	
+	public Cliente(){
+		ps = null;
+		con = new ConexionBD();
+	}
+	
 	public int guardar(){
 		int res = 0;
-		String query = "insert into clientes (idCliente, Usuario, Nombre, Apellidos, Contrasena, Correo) values (idCliente, ?, ?, ?, ?, ?)";
+		String query = "insert into clientes (Usuario, Nombre, Apellidos, Contrasena, Correo) values (?, ?, ?, ?, ?)";
 		try {
 			ps = con.getConexion().prepareStatement(query);
 			ps.setString(1, this.usuario);
@@ -54,9 +59,11 @@ public class Cliente {
 			rs=ps.executeQuery();
 			
 			if(rs.next()){
+				System.out.println("Logueo Exitoso");
 				return true;
 			}
 			else{
+				System.out.println("Los datos son incorrectos");
 				return false;
 			}
 		}catch (Exception e) {			
@@ -138,5 +145,12 @@ public class Cliente {
 	
 	private void setId(int id) {
 		this.id = id;
+	}
+	
+	
+	public static void main( String[] args ){
+	Cliente c = new Cliente("romulo", "Romulo", "Mcginnis", "123456", "mcinnis68@hotmail.com");
+	//c.guardar();
+	c.login("romulor", "123456");
 	}
 }

@@ -2,7 +2,7 @@ package sonidos.gui;
 
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
-
+import sonidos.op.*;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
@@ -11,6 +11,8 @@ import javax.swing.JTextField;
 import java.awt.FlowLayout;
 import javax.swing.JLabel;
 import java.awt.Color;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class Login extends JFrame {
 
@@ -46,6 +48,17 @@ public class Login extends JFrame {
 		contentPane.setLayout(null);
 		
 		JButton btnNewButton = new JButton("Entrar");
+		btnNewButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				String usuario = textField.getText();
+				String pass = textField_1.getText();
+				Cliente c = new Cliente();
+				boolean log = c.login(usuario, pass);
+				if(log){
+					new Principal(usuario).setVisible(true);
+				}
+			}
+		});
 		btnNewButton.setBounds(101, 190, 220, 28);
 		contentPane.add(btnNewButton);
 		
