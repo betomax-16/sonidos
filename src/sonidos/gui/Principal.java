@@ -44,6 +44,7 @@ import javax.swing.border.BevelBorder;
 import java.awt.Font;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.util.ArrayList;
@@ -54,6 +55,7 @@ public class Principal extends JFrame {
 	private JTextField textField;
 	private Cliente cliente;
 	private ArrayList<Sonido> sonidos;
+	JInternalFrame internalFrameAudios;
 	/**
 	 * Launch the application.
 	 */
@@ -70,17 +72,50 @@ public class Principal extends JFrame {
 		});
 	}
 
+	private void cargarSonidos(String tipo){
+		if (this.internalFrameAudios != null) {
+			this.internalFrameAudios.dispose();
+		}
+		sonidos = Sonido.buscarPorTipo(tipo);
+		
+		this.internalFrameAudios = new JInternalFrame("Audios");
+		internalFrameAudios.setBorder(null);
+		internalFrameAudios.getContentPane().setBackground(UIManager.getColor("InternalFrame.activeTitleBackground"));
+		
+		GroupLayout groupLayout = new GroupLayout(internalFrameAudios.getContentPane());
+		GroupLayout.Group grupoH = groupLayout.createSequentialGroup()
+											 .addGap(18)
+											 .addContainerGap(1117, Short.MAX_VALUE);
+		GroupLayout.Group grupoV = groupLayout.createParallelGroup(Alignment.BASELINE);
+		for (Sonido sonido : sonidos) {
+			ComponentAudio audio = new ComponentAudio(sonido);
+			grupoH.addComponent(audio);
+			grupoV.addComponent(audio);
+		}
+
+		groupLayout.setHorizontalGroup(
+			groupLayout.createParallelGroup(Alignment.LEADING)
+				.addGroup(grupoH)
+		);
+		groupLayout.setVerticalGroup(
+			groupLayout.createParallelGroup(Alignment.LEADING)
+				.addGroup(groupLayout.createSequentialGroup()
+						  .addGap(28)
+						  .addGroup(grupoV)
+						  .addContainerGap(545, Short.MAX_VALUE))
+		);
+		
+		internalFrameAudios.getContentPane().setLayout(groupLayout);
+		contentPane.add(internalFrameAudios, BorderLayout.CENTER);
+		internalFrameAudios.setVisible(true);
+	}
+	
 	/**
 	 * Create the frame.
 	 */
 	public Principal(Cliente cliente) {
 		this.cliente = cliente;
-		addWindowListener(new WindowAdapter() {
-			@Override
-			public void windowOpened(WindowEvent arg0) {
-				
-			}
-		});
+		
 		setExtendedState(Frame.MAXIMIZED_BOTH);
 		setTitle("Perfil");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -96,12 +131,32 @@ public class Principal extends JFrame {
 		contentPane.add(panel, BorderLayout.WEST);
 		
 		JButton btnNature = new JButton("Naturaleza");
+		btnNature.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				cargarSonidos("naturaleza");
+			}
+		});
 		
 		JButton btnCity = new JButton("Ciudad");
+		btnCity.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				cargarSonidos("ciudad");
+			}
+		});
 		
 		JButton btnAnimals = new JButton("Animales");
+		btnAnimals.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				cargarSonidos("animales");
+			}
+		});
 		
 		JButton btnPeople = new JButton("Personas");
+		btnPeople.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				cargarSonidos("personas");
+			}
+		});
 		
 		JButton btnOut = new JButton("Cerrar Sesión");
 		btnOut.addActionListener(new ActionListener() {
@@ -205,53 +260,53 @@ public class Principal extends JFrame {
 					.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
 		);
 		panel_1.setLayout(gl_panel_1);
+						
 		
-		JInternalFrame internalFrameAudios = new JInternalFrame("Audios");
-		internalFrameAudios.setBorder(null);
-		internalFrameAudios.getContentPane().setBackground(UIManager.getColor("InternalFrame.activeTitleBackground"));
 		
-		JLabel lblNewLabel = new JLabel("");
-		lblNewLabel.addMouseListener(new MouseAdapter() {
-			@SuppressWarnings("deprecation")
-			@Override
-			public void mouseEntered(MouseEvent arg0) {
-				lblNewLabel.setCursor(new Cursor(HAND_CURSOR));
-			}
-		});
-		lblNewLabel.setBorder(new SoftBevelBorder(BevelBorder.LOWERED, null, null, null, null));
-		lblNewLabel.setIcon(new ImageIcon(Principal.class.getResource("/recursos/ico/resonance_audio_logo_large.png")));
-		
-		JLabel lblNewLabel_1 = new JLabel("Titulo");
-		lblNewLabel_1.addMouseListener(new MouseAdapter() {
-			@SuppressWarnings("deprecation")
-			@Override
-			public void mouseEntered(MouseEvent e) {
-				lblNewLabel_1.setCursor(new Cursor(HAND_CURSOR));
-			}
-		});
-		lblNewLabel_1.setHorizontalAlignment(SwingConstants.CENTER);
-		lblNewLabel_1.setFont(new Font("Tahoma", Font.BOLD, 13));
-		GroupLayout groupLayout = new GroupLayout(internalFrameAudios.getContentPane());
+		/*GroupLayout groupLayout = new GroupLayout(internalFrameAudios.getContentPane());
 		groupLayout.setHorizontalGroup(
 			groupLayout.createParallelGroup(Alignment.LEADING)
 				.addGroup(groupLayout.createSequentialGroup()
-					.addGap(36)
-					.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING, false)
-						.addComponent(lblNewLabel_1, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 134, Short.MAX_VALUE)
-						.addComponent(lblNewLabel, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-					.addGap(1073))
+					.addGap(42)
+					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+						.addGroup(groupLayout.createSequentialGroup()
+							.addComponent(btnNewButton_3)
+							.addGap(18)
+							.addComponent(btnNewButton_4)
+							.addGap(18)
+							.addComponent(btnNewButton_5))
+						.addGroup(groupLayout.createSequentialGroup()
+							.addComponent(btnNewButton)
+							.addGap(18)
+							.addComponent(btnNewButton_1)
+							.addGap(18)
+							.addComponent(btnNewButton_2)))
+					.addContainerGap(898, Short.MAX_VALUE))
 		);
 		groupLayout.setVerticalGroup(
 			groupLayout.createParallelGroup(Alignment.LEADING)
 				.addGroup(groupLayout.createSequentialGroup()
 					.addGap(43)
-					.addComponent(lblNewLabel)
-					.addPreferredGap(ComponentPlacement.UNRELATED)
-					.addComponent(lblNewLabel_1)
-					.addContainerGap(423, Short.MAX_VALUE))
+					.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
+						.addComponent(btnNewButton)
+						.addComponent(btnNewButton_1)
+						.addComponent(btnNewButton_2))
+					.addGap(18)
+					.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
+						.addComponent(btnNewButton_3)
+						.addComponent(btnNewButton_4)
+						.addComponent(btnNewButton_5))
+					.addContainerGap(518, Short.MAX_VALUE))
 		);
 		internalFrameAudios.getContentPane().setLayout(groupLayout);
 		contentPane.add(internalFrameAudios, BorderLayout.CENTER);
-		internalFrameAudios.setVisible(true);
+		internalFrameAudios.setVisible(true);*/
+		
+		addWindowListener(new WindowAdapter() {
+			@Override
+			public void windowOpened(WindowEvent arg0) {
+				cargarSonidos("animales");
+			}
+		});		
 	}
 }
