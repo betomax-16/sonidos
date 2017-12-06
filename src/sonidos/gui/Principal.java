@@ -7,44 +7,21 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.JButton;
-import javax.swing.BoxLayout;
-import java.awt.GridLayout;
 import java.awt.Image;
-import java.awt.GridBagLayout;
-import java.awt.GridBagConstraints;
-import java.awt.Insets;
-import net.miginfocom.swing.MigLayout;
 import sonidos.op.Cliente;
 import sonidos.op.Sonido;
 
-import java.awt.FlowLayout;
-import java.awt.CardLayout;
-import com.jgoodies.forms.layout.FormLayout;
-import com.jgoodies.forms.layout.ColumnSpec;
-import com.jgoodies.forms.layout.RowSpec;
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
-import javax.swing.JMenu;
 import javax.swing.UIManager;
 import javax.swing.ImageIcon;
-import javax.swing.SwingConstants;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.awt.Frame;
 import javax.swing.JInternalFrame;
-import java.awt.Component;
-import java.awt.Cursor;
-import java.awt.Dimension;
-import javax.swing.JScrollPane;
-import javax.swing.border.SoftBevelBorder;
-import javax.swing.border.BevelBorder;
-import java.awt.Font;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.util.ArrayList;
@@ -158,7 +135,7 @@ public class Principal extends JFrame {
 			}
 		});
 		
-		JButton btnOut = new JButton("Cerrar Sesión");
+		JButton btnOut = new JButton("Cerrar Sesion");
 		btnOut.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				Login login = new Login();
@@ -204,7 +181,7 @@ public class Principal extends JFrame {
 		btnNewAudio.setBackground(UIManager.getColor("InternalFrame.activeTitleBackground"));
 		btnNewAudio.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				CargarSonido cargar = new CargarSonido();
+				CargarSonido cargar = new CargarSonido(cliente);
 				cargar.setVisible(true);
 			}
 		});

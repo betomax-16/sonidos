@@ -10,6 +10,7 @@ import java.awt.Font;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.JButton;
 import sonidos.op.Clase;
+import sonidos.op.Cliente;
 import sonidos.op.Sonido;
 
 import javax.swing.border.SoftBevelBorder;
@@ -30,6 +31,7 @@ public class CargarSonido extends JDialog {
 	private JPanel contentPane;
 	private JTextField textField;
 	private JTextField textField_1;
+	private Cliente cliente;
 	
 	/**
 	 * Launch the application.
@@ -38,7 +40,7 @@ public class CargarSonido extends JDialog {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					CargarSonido dialog = new CargarSonido();
+					CargarSonido dialog = new CargarSonido(null);
 					dialog.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -47,7 +49,9 @@ public class CargarSonido extends JDialog {
 		});
 	}
 	
-	public CargarSonido() {
+	public CargarSonido(Cliente Cliente) {
+		this.cliente = Cliente;
+		
 		setModal(true);
 		
 		setTitle("Subir Sonido");
@@ -132,10 +136,11 @@ public class CargarSonido extends JDialog {
 				String imagen = label.getText();
 				String audio = textField_1.getText();
 				String tipo = (String) comboBox.getSelectedItem();
-				int cliente = 1;
+				int cliente = Cliente.getId();
 				if (titulo != "" && imagen != "" && audio != "" && tipo != "" && cliente != 0) {
 					Sonido son = new Sonido(titulo, imagen, audio, tipo, cliente);
 					son.guardar();
+					dispose();
 				}
 				else{
 					System.out.println("Verificar Datos a Guardar");
