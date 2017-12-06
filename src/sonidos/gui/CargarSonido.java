@@ -7,9 +7,12 @@ import javax.swing.JTextField;
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 import java.awt.Font;
+import java.awt.Image;
+
 import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.JButton;
 import sonidos.op.Clase;
+import sonidos.op.Cliente;
 import sonidos.op.Sonido;
 
 import javax.swing.border.SoftBevelBorder;
@@ -30,6 +33,7 @@ public class CargarSonido extends JDialog {
 	private JPanel contentPane;
 	private JTextField textField;
 	private JTextField textField_1;
+	private Cliente cliente;
 	
 	/**
 	 * Launch the application.
@@ -38,7 +42,7 @@ public class CargarSonido extends JDialog {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					CargarSonido dialog = new CargarSonido();
+					CargarSonido dialog = new CargarSonido(null);
 					dialog.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -47,7 +51,9 @@ public class CargarSonido extends JDialog {
 		});
 	}
 	
-	public CargarSonido() {
+	public CargarSonido(Cliente Cliente) {
+		this.cliente = Cliente;
+		
 		setModal(true);
 		
 		setTitle("Subir Sonido");
@@ -116,8 +122,11 @@ public class CargarSonido extends JDialog {
 				int seleccion=fc.showOpenDialog(contentPane);
 				if(seleccion==JFileChooser.APPROVE_OPTION){
 					File fichero=fc.getSelectedFile();
-					ImageIcon imagen = new ImageIcon(fichero.getAbsolutePath());
-					label.setIcon(imagen);
+					ImageIcon imagen = new ImageIcon(fichero.getAbsolutePath());										
+					Image img = imagen.getImage();
+					Image otraimg = img.getScaledInstance(130,130,java.awt.Image.SCALE_SMOOTH); 
+					ImageIcon otroicon = new ImageIcon(otraimg);																									
+					label.setIcon(otroicon);
 					label.setText(fichero.getAbsolutePath());
 				}
 			}
@@ -132,10 +141,11 @@ public class CargarSonido extends JDialog {
 				String imagen = label.getText();
 				String audio = textField_1.getText();
 				String tipo = (String) comboBox.getSelectedItem();
-				int cliente = 1;
+				int cliente = Cliente.getId();
 				if (titulo != "" && imagen != "" && audio != "" && tipo != "" && cliente != 0) {
 					Sonido son = new Sonido(titulo, imagen, audio, tipo, cliente);
 					son.guardar();
+					dispose();
 				}
 				else{
 					System.out.println("Verificar Datos a Guardar");

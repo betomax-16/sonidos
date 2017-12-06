@@ -7,52 +7,25 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.JButton;
-import javax.sound.sampled.AudioSystem;
-import javax.sound.sampled.Clip;
-import javax.sound.sampled.LineUnavailableException;
-import javax.sound.sampled.UnsupportedAudioFileException;
-import javax.swing.BoxLayout;
-import java.awt.GridLayout;
 import java.awt.Image;
-import java.awt.GridBagLayout;
-import java.awt.GridBagConstraints;
-import java.awt.Insets;
-import net.miginfocom.swing.MigLayout;
 import sonidos.op.Cliente;
 import sonidos.op.Sonido;
-
-import java.awt.FlowLayout;
-import java.awt.CardLayout;
-import com.jgoodies.forms.layout.FormLayout;
-import com.jgoodies.forms.layout.ColumnSpec;
-import com.jgoodies.forms.layout.RowSpec;
 
 import javazoom.jl.decoder.JavaLayerException;
 import javazoom.jl.player.Player;
 
+import javax.sound.sampled.Clip;
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
-import javax.swing.JMenu;
 import javax.swing.UIManager;
 import javax.swing.ImageIcon;
-import javax.swing.SwingConstants;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.awt.Frame;
 import javax.swing.JInternalFrame;
-import java.awt.Component;
-import java.awt.Cursor;
-import java.awt.Dimension;
-import javax.swing.JScrollPane;
-import javax.swing.border.SoftBevelBorder;
-import javax.swing.border.BevelBorder;
-import java.awt.Font;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.io.BufferedInputStream;
@@ -64,12 +37,11 @@ import java.util.ArrayList;
 public class Principal extends JFrame {
 
 	private JPanel contentPane;
-	private JTextField textField;
 	private Cliente cliente;
 	private ArrayList<Sonido> sonidos;
 	JInternalFrame internalFrameAudios;
-	
-	Clip clip;
+		
+	Thread hilo;
 	/**
 	 * Launch the application.
 	 */
@@ -172,7 +144,7 @@ public class Principal extends JFrame {
 			}
 		});
 		
-		JButton btnOut = new JButton("Cerrar Sesión");
+		JButton btnOut = new JButton("Cerrar Sesion");
 		btnOut.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				Login login = new Login();
@@ -218,57 +190,66 @@ public class Principal extends JFrame {
 		btnNewAudio.setBackground(UIManager.getColor("InternalFrame.activeTitleBackground"));
 		btnNewAudio.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				CargarSonido cargar = new CargarSonido();
+				CargarSonido cargar = new CargarSonido(cliente);
 				cargar.setVisible(true);
 			}
 		});
 		
 		JLabel lbUserName = new JLabel(this.cliente.getNombre());
 		
-		textField = new JTextField();
-		textField.setColumns(10);
-		
 		JButton btnSearch = new JButton("");
 		btnSearch.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				String url = "/recursos/audio/audio.mp3";
-				try {
-		            FileInputStream fis;
-		            Player player;
-		            fis = new FileInputStream(Principal.class.getResource(url).getPath());
-		            BufferedInputStream bis = new BufferedInputStream(fis);
-
-		            player = new Player(bis); // Llamada a constructor de la clase Player
-		            player.play();          // Llamada al método play
-		        } catch (JavaLayerException e) {
-		            e.printStackTrace();
-		        } catch (FileNotFoundException e) {
-		            e.printStackTrace();
-		        }
+				hilo = new Thread(new Runnable() {
+					
+					@Override
+					public void run() {						
+						String url = "/recursos/audio/audio.mp3";
+						try {
+				            FileInputStream fis;		            
+				            fis = new FileInputStream(Principal.class.getResource(url).getPath());
+				            BufferedInputStream bis = new BufferedInputStream(fis);
+				            Player player;
+				            player = new Player(bis); // Llamada a constructor de la clase Player
+				            player.play();          // Llamada al método play
+				        } catch (JavaLayerException e) {
+				            e.printStackTrace();
+				        } catch (FileNotFoundException e) {
+				            e.printStackTrace();
+				        }
+					}
+				});
+				hilo.start();
 			}
 		});
-		icon = new ImageIcon(Principal.class.getResource("/recursos/ico/Feedbin-Icon-home-search.svg.png"));
+		icon = new ImageIcon(Principal.class.getResource("/recursos/ico/play.png"));
 		img = icon.getImage();
-		otraimg = img.getScaledInstance(10,10,java.awt.Image.SCALE_SMOOTH); 
+		otraimg = img.getScaledInstance(20,20,java.awt.Image.SCALE_SMOOTH); 
 		otroicon = new ImageIcon(otraimg);
 		btnSearch.setIcon(otroicon);
 		
 		JLabel lblA = new JLabel("");
 		lblA.setIcon(new ImageIcon(Principal.class.getResource("/recursos/ico/profile_logged_default.png")));
 		
+		JButton btnPause = new JButton("Detener");
+		btnPause.addActionListener(new ActionListener() {			
+			@SuppressWarnings("deprecation")
+			public void actionPerformed(ActionEvent arg0) {
+				hilo.stop();				
+			}
+		});
+		
 		
 		GroupLayout gl_panel_1 = new GroupLayout(panel_1);
 		gl_panel_1.setHorizontalGroup(
 			gl_panel_1.createParallelGroup(Alignment.LEADING)
 				.addGroup(gl_panel_1.createSequentialGroup()
-					.addGroup(gl_panel_1.createParallelGroup(Alignment.LEADING)
-						.addGroup(gl_panel_1.createSequentialGroup()
-							.addGap(122)
-							.addComponent(textField, GroupLayout.PREFERRED_SIZE, 150, GroupLayout.PREFERRED_SIZE))
-						.addComponent(btnNewAudio, GroupLayout.PREFERRED_SIZE, 113, GroupLayout.PREFERRED_SIZE))
-					.addGap(1)
-					.addComponent(btnSearch, GroupLayout.PREFERRED_SIZE, 24, GroupLayout.PREFERRED_SIZE)
-					.addPreferredGap(ComponentPlacement.RELATED, 16, Short.MAX_VALUE)
+					.addComponent(btnNewAudio, GroupLayout.PREFERRED_SIZE, 113, GroupLayout.PREFERRED_SIZE)
+					.addGap(353)
+					.addComponent(btnSearch, GroupLayout.PREFERRED_SIZE, 36, GroupLayout.PREFERRED_SIZE)
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addComponent(btnPause)
+					.addPreferredGap(ComponentPlacement.RELATED, 653, Short.MAX_VALUE)
 					.addComponent(lblA)
 					.addGap(15)
 					.addComponent(lbUserName)
@@ -280,15 +261,15 @@ public class Principal extends JFrame {
 					.addGroup(gl_panel_1.createParallelGroup(Alignment.LEADING)
 						.addComponent(lblA)
 						.addGroup(gl_panel_1.createSequentialGroup()
+							.addContainerGap()
+							.addComponent(lbUserName))
+						.addGroup(gl_panel_1.createSequentialGroup()
 							.addGap(8)
 							.addGroup(gl_panel_1.createParallelGroup(Alignment.LEADING)
-								.addComponent(btnSearch)
-								.addGroup(gl_panel_1.createParallelGroup(Alignment.BASELINE)
-									.addComponent(textField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-									.addComponent(btnNewAudio, GroupLayout.PREFERRED_SIZE, 19, GroupLayout.PREFERRED_SIZE))))
-						.addGroup(gl_panel_1.createSequentialGroup()
-							.addContainerGap()
-							.addComponent(lbUserName)))
+								.addGroup(gl_panel_1.createParallelGroup(Alignment.LEADING, false)
+									.addComponent(btnPause, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+									.addComponent(btnSearch, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+								.addComponent(btnNewAudio, GroupLayout.PREFERRED_SIZE, 19, GroupLayout.PREFERRED_SIZE))))
 					.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
 		);
 		panel_1.setLayout(gl_panel_1);
