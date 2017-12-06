@@ -4,7 +4,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
 public class Cliente {
-	private int id;
+	private String id;
 	private String usuario;
 	private String nombre;
 	private String apellidos;
@@ -14,6 +14,16 @@ public class Cliente {
 	private ConexionBD con;
 	
 	public Cliente(String usuario, String nombre, String apellidos, String contrasena, String email) {
+		this.usuario = usuario;
+		this.nombre = nombre;
+		this.apellidos = apellidos;
+		this.contrasena = contrasena;
+		this.email = email;
+		ps = null;
+		con = new ConexionBD();
+	}
+	public Cliente(String id, String usuario, String nombre, String apellidos, String contrasena, String email) {
+		this.id = id;
 		this.usuario = usuario;
 		this.nombre = nombre;
 		this.apellidos = apellidos;
@@ -76,11 +86,38 @@ public class Cliente {
 		}
 	}
 	
+	public Cliente getDatos(String usuario, String pass){
+		Cliente objeto = new Cliente();
+		ResultSet rs;
+		String query = "select * from clientes where Usuario=? and Contrasena=? ";
+		try{
+			ps = con.getConexion().prepareStatement(query);
+			ps.setString(1, usuario);
+			ps.setString(2, pass);
+			rs=ps.executeQuery();
+			if(rs.next()){
+				objeto.setId(rs.getString("idCliente"));
+				objeto.setUsuario(usuario);
+				objeto.setNombre(rs.getString("Nombre"));
+				objeto.setApellidos(rs.getString("Apellidos"));
+				objeto.setContrasena(rs.getString("Contrasena"));
+				objeto.setEmail(rs.getString("Correo"));
+			}
+		}catch (Exception e) {			
+			System.out.println("Error al regresar objeto " + e.getMessage());
+		}
+		finally {
+			ps = null;
+			con.close();
+		}
+		return objeto;
+	}
+	
 	public void eliminar(){
 		
 	}
 	
-	public static Cliente buscarPorId(int id){
+	public static Cliente buscarPorId(String id){
 		String usuario = "";
 		String nombre = "";
 		String apellidos = "";
@@ -139,18 +176,22 @@ public class Cliente {
 		this.email = email;
 	}
 
-	public int getId() {
+	public String getId() {
 		return id;
 	}
 	
-	private void setId(int id) {
+	private void setId(String id) {
 		this.id = id;
 	}
 	
 	
 	public static void main( String[] args ){
-	Cliente c = new Cliente("romulo", "Romulo", "Mcginnis", "123456", "mcinnis68@hotmail.com");
+	//Cliente c = new Cliente("romulo", "Romulo", "Mcginnis", "123456", "mcinnis68@hotmail.com");
 	//c.guardar();
-	c.login("romulor", "123456");
+		Cliente c= new Cliente();
+		Cliente obj = new Cliente();
+		obj = c.getDatos("romulo", "123456");
+		System.out.println(obj.getApellidos());
+	
 	}
 }

@@ -49,6 +49,7 @@ import java.awt.Color;
 import javax.swing.JList;
 import javax.swing.JMenuItem;
 import java.awt.Frame;
+import sonidos.op.*;
 
 public class Principal extends JFrame {
 
@@ -73,8 +74,7 @@ public class Principal extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public Principal(String user) {
-		this.user = user;
+	public Principal(Cliente obj) {
 		new Login().setVisible(false);
 		setExtendedState(Frame.MAXIMIZED_BOTH);
 		setTitle("Perfil");
@@ -130,9 +130,24 @@ public class Principal extends JFrame {
 		
 		JLabel lblUsuario = new JLabel();
 		lblUsuario.setFont(new Font("Tahoma", Font.BOLD, 13));
-		lblUsuario.setBounds(1213, 11, 86, 15);
+		lblUsuario.setBounds(762, 11, 86, 15);
 		panel_1.add(lblUsuario);
-		lblUsuario.setText(user);
+		lblUsuario.setText(obj.getUsuario());
+		
+		JLabel lblNewLabel_1 = new JLabel();
+		lblNewLabel_1.setBounds(905, 12, 93, 14);
+		panel_1.add(lblNewLabel_1);
+		lblNewLabel_1.setText(obj.getNombre());
+		
+		JLabel lblNewLabel_2 = new JLabel();
+		lblNewLabel_2.setBounds(1027, 12, 99, 14);
+		panel_1.add(lblNewLabel_2);
+		lblNewLabel_2.setText(obj.getApellidos());
+		
+		JLabel lblNewLabel_3 = new JLabel();
+		lblNewLabel_3.setBounds(1164, 12, 140, 14);
+		panel_1.add(lblNewLabel_3);
+		lblNewLabel_3.setText(obj.getEmail());
 		
 		JPanel panel_2 = new JPanel();
 		panel_2.setBounds(0, 278, 244, 437);

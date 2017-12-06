@@ -55,7 +55,8 @@ public class Login extends JFrame {
 				Cliente c = new Cliente();
 				boolean log = c.login(usuario, pass);
 				if(log){
-					new Principal(usuario).setVisible(true);
+					Cliente obj = c.getDatos(usuario, pass);
+					new Principal(obj).setVisible(true);
 				}
 			}
 		});
