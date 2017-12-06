@@ -7,6 +7,10 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.JButton;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
+import javax.sound.sampled.LineUnavailableException;
+import javax.sound.sampled.UnsupportedAudioFileException;
 import javax.swing.BoxLayout;
 import java.awt.GridLayout;
 import java.awt.Image;
@@ -22,6 +26,10 @@ import java.awt.CardLayout;
 import com.jgoodies.forms.layout.FormLayout;
 import com.jgoodies.forms.layout.ColumnSpec;
 import com.jgoodies.forms.layout.RowSpec;
+
+import javazoom.jl.decoder.JavaLayerException;
+import javazoom.jl.player.Player;
+
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.LayoutStyle.ComponentPlacement;
@@ -47,6 +55,10 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.io.BufferedInputStream;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.ArrayList;
 
 public class Principal extends JFrame {
@@ -56,6 +68,8 @@ public class Principal extends JFrame {
 	private Cliente cliente;
 	private ArrayList<Sonido> sonidos;
 	JInternalFrame internalFrameAudios;
+	
+	Clip clip;
 	/**
 	 * Launch the application.
 	 */
@@ -215,6 +229,24 @@ public class Principal extends JFrame {
 		textField.setColumns(10);
 		
 		JButton btnSearch = new JButton("");
+		btnSearch.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				String url = "/recursos/audio/audio.mp3";
+				try {
+		            FileInputStream fis;
+		            Player player;
+		            fis = new FileInputStream(Principal.class.getResource(url).getPath());
+		            BufferedInputStream bis = new BufferedInputStream(fis);
+
+		            player = new Player(bis); // Llamada a constructor de la clase Player
+		            player.play();          // Llamada al método play
+		        } catch (JavaLayerException e) {
+		            e.printStackTrace();
+		        } catch (FileNotFoundException e) {
+		            e.printStackTrace();
+		        }
+			}
+		});
 		icon = new ImageIcon(Principal.class.getResource("/recursos/ico/Feedbin-Icon-home-search.svg.png"));
 		img = icon.getImage();
 		otraimg = img.getScaledInstance(10,10,java.awt.Image.SCALE_SMOOTH); 
