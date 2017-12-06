@@ -51,8 +51,9 @@ public class Login extends JFrame {
 		JButton btnNewButton = new JButton("Entrar");
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				if (Cliente.login(txtUser.getText(), txtPass.getText())) {
-					Principal prin = new Principal();
+				Cliente cliente = Cliente.getDatos(txtUser.getText(), txtPass.getText());
+				if (cliente != null) {					
+					Principal prin = new Principal(cliente);
 					prin.setVisible(true);
 					dispose();
 				}

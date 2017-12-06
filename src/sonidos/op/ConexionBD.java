@@ -8,7 +8,7 @@ public class ConexionBD {
 	private static Connection conexion;
 	private static final String driver = "com.mysql.jdbc.Driver";
 	private static final String user = "root";
-	private static final String pass = "";
+	private static final String pass = "1234";
 	private static final String url = "jdbc:mysql://localhost:3306/sonidos";
 	
 	public ConexionBD() {

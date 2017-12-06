@@ -141,11 +141,12 @@ public class Registro extends JDialog {
 				String confirmPass = txtConfirmPass.getText();
 								
 				if (nombre.trim() != "" && apellidos.trim() != "" && usuario.trim() != "" &&
-					correo.trim() != "" && pass.trim() != "" && pass.trim().equals(confirmPass.trim())) {
+					correo.trim() != "" && pass.trim() != "" && pass.trim().equals(confirmPass.trim()) && checkBox.isSelected()) {
 					Cliente cli = new Cliente(usuario, nombre, apellidos, pass, correo);
 					if (cli.guardar() > 0) {
-						if (Cliente.login(cli.getUsuario(), cli.getContrasena())) {
-							Principal prin = new Principal();
+						Cliente cliente = Cliente.getDatos(cli.getUsuario(), cli.getContrasena()); 
+						if (cliente != null) {
+							Principal prin = new Principal(cliente);
 							prin.setVisible(true);
 							dispose();
 						}

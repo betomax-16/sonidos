@@ -23,9 +23,14 @@ public class Cliente {
 		con = new ConexionBD();
 	}
 	
+	public Cliente(){
+		ps = null;
+		con = new ConexionBD();
+	}
+	
 	public int guardar(){
 		int res = 0;
-		String query = "insert into clientes (idCliente, Usuario, Nombre, Apellidos, Contrasena, Correo) values (idCliente, ?, ?, ?, ?, ?)";
+		String query = "insert into clientes (Usuario, Nombre, Apellidos, Contrasena, Correo) values (?, ?, ?, ?, ?)";
 		try {
 			ps = con.getConexion().prepareStatement(query);
 			ps.setString(1, this.usuario);
@@ -55,8 +60,7 @@ public class Cliente {
 			ps.setString(1, usuario);
 			ps.setString(2, password);
 			rs=ps.executeQuery();
-			
-			res = rs.next();			
+			res = rs.next();
 		}catch (Exception e) {			
 			System.out.println("Error al insertar " + e.getMessage());			
 		}
@@ -65,6 +69,36 @@ public class Cliente {
 			con.close();
 		}
 		return res;
+	}
+	
+	public static Cliente getDatos(String usuario, String pass){
+		Cliente objeto = null;
+		ConexionBD con = new ConexionBD();
+		PreparedStatement ps;
+		ResultSet rs;
+		String query = "select * from clientes where Usuario=? and Contrasena=? ";
+		try{
+			ps = con.getConexion().prepareStatement(query);
+			ps.setString(1, usuario);
+			ps.setString(2, pass);
+			rs=ps.executeQuery();
+			if(rs.next()){
+				objeto = new Cliente();
+				objeto.setId(rs.getInt("idCliente"));
+				objeto.setUsuario(usuario);
+				objeto.setNombre(rs.getString("Nombre"));
+				objeto.setApellidos(rs.getString("Apellidos"));
+				objeto.setContrasena(rs.getString("Contrasena"));
+				objeto.setEmail(rs.getString("Correo"));
+			}
+		}catch (Exception e) {			
+			System.out.println("Error al regresar objeto " + e.getMessage());
+		}
+		finally {
+			ps = null;
+			con.close();
+		}
+		return objeto;
 	}
 	
 	public void eliminar(){
