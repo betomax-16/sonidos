@@ -10,7 +10,7 @@ import javax.swing.JButton;
 import java.awt.Image;
 import sonidos.op.Cliente;
 import sonidos.op.Sonido;
-
+import sonidos.op.reproducir;
 import javazoom.jl.decoder.JavaLayerException;
 import javazoom.jl.player.Player;
 
@@ -38,9 +38,10 @@ public class Principal extends JFrame {
 
 	private JPanel contentPane;
 	private Cliente cliente;
+	private reproducir rep;
 	private ArrayList<Sonido> sonidos;
 	JInternalFrame internalFrameAudios;
-		
+
 	Thread hilo;
 	/**
 	 * Launch the application.
@@ -63,11 +64,11 @@ public class Principal extends JFrame {
 			this.internalFrameAudios.dispose();
 		}
 		sonidos = Sonido.buscarPorTipo(tipo);
-		
+
 		this.internalFrameAudios = new JInternalFrame("Audios");
 		internalFrameAudios.setBorder(null);
 		internalFrameAudios.getContentPane().setBackground(UIManager.getColor("InternalFrame.activeTitleBackground"));
-		
+
 		GroupLayout groupLayout = new GroupLayout(internalFrameAudios.getContentPane());
 		GroupLayout.Group grupoH = groupLayout.createSequentialGroup()
 											 .addGap(18)
@@ -90,18 +91,18 @@ public class Principal extends JFrame {
 						  .addGroup(grupoV)
 						  .addContainerGap(545, Short.MAX_VALUE))
 		);
-		
+
 		internalFrameAudios.getContentPane().setLayout(groupLayout);
 		contentPane.add(internalFrameAudios, BorderLayout.CENTER);
 		internalFrameAudios.setVisible(true);
 	}
-	
+
 	/**
 	 * Create the frame.
 	 */
 	public Principal(Cliente cliente) {
 		this.cliente = cliente;
-		
+
 		setExtendedState(Frame.MAXIMIZED_BOTH);
 		setTitle("Perfil");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -111,39 +112,39 @@ public class Principal extends JFrame {
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		contentPane.setLayout(new BorderLayout(0, 0));
 		setContentPane(contentPane);
-		
+
 		JPanel panel = new JPanel();
 		panel.setBackground(UIManager.getColor("InternalFrame.activeTitleGradient"));
 		contentPane.add(panel, BorderLayout.WEST);
-		
+
 		JButton btnNature = new JButton("Naturaleza");
 		btnNature.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				cargarSonidos("naturaleza");
 			}
 		});
-		
+
 		JButton btnCity = new JButton("Ciudad");
 		btnCity.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				cargarSonidos("ciudad");
 			}
 		});
-		
+
 		JButton btnAnimals = new JButton("Animales");
 		btnAnimals.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				cargarSonidos("animales");
 			}
 		});
-		
+
 		JButton btnPeople = new JButton("Personas");
 		btnPeople.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				cargarSonidos("personas");
 			}
 		});
-		
+
 		JButton btnOut = new JButton("Cerrar Sesion");
 		btnOut.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
@@ -176,11 +177,11 @@ public class Principal extends JFrame {
 					.addContainerGap(42, Short.MAX_VALUE))
 		);
 		panel.setLayout(gl_panel);
-		
+
 		JPanel panel_1 = new JPanel();
 		panel_1.setBackground(UIManager.getColor("ComboBox.selectionBackground"));
 		contentPane.add(panel_1, BorderLayout.NORTH);
-		
+
 		JButton btnNewAudio = new JButton("Nuevo");
 		ImageIcon icon = new ImageIcon(Principal.class.getResource("/recursos/ico/new_add_insert_file_13948.png"));
 		Image img = icon.getImage();
@@ -194,14 +195,14 @@ public class Principal extends JFrame {
 				cargar.setVisible(true);
 			}
 		});
-		
+
 		JLabel lbUserName = new JLabel(this.cliente.getNombre());
-		
+
 		JButton btnSearch = new JButton("");
 		btnSearch.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				hilo = new Thread(new Runnable() {
-					
+
 					@Override
 					public void run() {						
 						String url = "/recursos/audio/audio.mp3";
@@ -211,7 +212,7 @@ public class Principal extends JFrame {
 				            BufferedInputStream bis = new BufferedInputStream(fis);
 				            Player player;
 				            player = new Player(bis); // Llamada a constructor de la clase Player
-				            player.play();          // Llamada al mÃ©todo play
+				            player.play();          // Llamada al método play
 				        } catch (JavaLayerException e) {
 				            e.printStackTrace();
 				        } catch (FileNotFoundException e) {
@@ -227,10 +228,10 @@ public class Principal extends JFrame {
 		otraimg = img.getScaledInstance(20,20,java.awt.Image.SCALE_SMOOTH); 
 		otroicon = new ImageIcon(otraimg);
 		btnSearch.setIcon(otroicon);
-		
+
 		JLabel lblA = new JLabel("");
 		lblA.setIcon(new ImageIcon(Principal.class.getResource("/recursos/ico/profile_logged_default.png")));
-		
+
 		JButton btnPause = new JButton("Detener");
 		btnPause.addActionListener(new ActionListener() {			
 			@SuppressWarnings("deprecation")
@@ -238,8 +239,7 @@ public class Principal extends JFrame {
 				hilo.stop();				
 			}
 		});
-		
-		
+
 		GroupLayout gl_panel_1 = new GroupLayout(panel_1);
 		gl_panel_1.setHorizontalGroup(
 			gl_panel_1.createParallelGroup(Alignment.LEADING)
@@ -273,9 +273,7 @@ public class Principal extends JFrame {
 					.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
 		);
 		panel_1.setLayout(gl_panel_1);
-						
-		
-		
+
 		/*GroupLayout groupLayout = new GroupLayout(internalFrameAudios.getContentPane());
 		groupLayout.setHorizontalGroup(
 			groupLayout.createParallelGroup(Alignment.LEADING)
@@ -314,7 +312,7 @@ public class Principal extends JFrame {
 		internalFrameAudios.getContentPane().setLayout(groupLayout);
 		contentPane.add(internalFrameAudios, BorderLayout.CENTER);
 		internalFrameAudios.setVisible(true);*/
-		
+
 		addWindowListener(new WindowAdapter() {
 			@Override
 			public void windowOpened(WindowEvent arg0) {

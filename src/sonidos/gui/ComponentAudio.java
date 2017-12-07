@@ -6,11 +6,14 @@ import javax.swing.ImageIcon;
 
 import java.awt.Cursor;
 import java.awt.FlowLayout;
+import java.awt.Image;
+
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.LayoutStyle.ComponentPlacement;
 
 import sonidos.op.Sonido;
+import sonidos.op.reproducir;
 
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -45,9 +48,15 @@ public class ComponentAudio extends JPanel {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
 				System.out.println(sonido.getId());
+				String SonidoR = sonido.getAudio();
+				reproducir rep = new reproducir(SonidoR);
 			}
 		});
-		lbImage.setIcon(new ImageIcon(ComponentAudio.class.getResource("/recursos/ico/resonance_audio_logo_large.png")));
+		ImageIcon imagen = new ImageIcon(sonido.getImagen());										
+		Image img = imagen.getImage();
+		Image otraimg = img.getScaledInstance(120,105,java.awt.Image.SCALE_SMOOTH); 
+		ImageIcon otroicon = new ImageIcon(otraimg);																									
+		lbImage.setIcon(otroicon);
 		GroupLayout groupLayout = new GroupLayout(this);
 		groupLayout.setHorizontalGroup(
 			groupLayout.createParallelGroup(Alignment.LEADING)

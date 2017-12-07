@@ -13,6 +13,7 @@ import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.JButton;
 import sonidos.op.Clase;
 import sonidos.op.Cliente;
+import java.nio.file.*;
 import sonidos.op.Sonido;
 
 import javax.swing.border.SoftBevelBorder;
@@ -25,6 +26,7 @@ import javax.swing.JDialog;
 import javax.swing.JFileChooser;
 import java.awt.event.ActionListener;
 import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.awt.event.ActionEvent;
 
@@ -34,6 +36,8 @@ public class CargarSonido extends JDialog {
 	private JTextField textField;
 	private JTextField textField_1;
 	private Cliente cliente;
+	File ficheroA, ficheroI;
+	int contador = 0;
 	
 	/**
 	 * Launch the application.
@@ -105,8 +109,8 @@ public class CargarSonido extends JDialog {
 				fc1.setFileFilter(filtro);
 				int seleccion=fc1.showOpenDialog(contentPane);
 				if(seleccion==JFileChooser.APPROVE_OPTION){
-					File fichero=fc1.getSelectedFile();
-					textField_1.setText(fichero.getAbsolutePath());
+					ficheroA=fc1.getSelectedFile();
+					textField_1.setText(ficheroA.getAbsolutePath());
 				}
 			}
 		});
@@ -121,13 +125,13 @@ public class CargarSonido extends JDialog {
 				fc.setFileFilter(filtro);
 				int seleccion=fc.showOpenDialog(contentPane);
 				if(seleccion==JFileChooser.APPROVE_OPTION){
-					File fichero=fc.getSelectedFile();
-					ImageIcon imagen = new ImageIcon(fichero.getAbsolutePath());										
+					ficheroI=fc.getSelectedFile();
+					ImageIcon imagen = new ImageIcon(ficheroI.getAbsolutePath());										
 					Image img = imagen.getImage();
 					Image otraimg = img.getScaledInstance(130,130,java.awt.Image.SCALE_SMOOTH); 
 					ImageIcon otroicon = new ImageIcon(otraimg);																									
 					label.setIcon(otroicon);
-					label.setText(fichero.getAbsolutePath());
+					label.setText(ficheroI.getAbsolutePath());
 				}
 			}
 		});
@@ -143,7 +147,26 @@ public class CargarSonido extends JDialog {
 				String tipo = (String) comboBox.getSelectedItem();
 				int cliente = Cliente.getId();
 				if (titulo != "" && imagen != "" && audio != "" && tipo != "" && cliente != 0) {
-					Sonido son = new Sonido(titulo, imagen, audio, tipo, cliente);
+					Path origenI = Paths.get(imagen);
+					Path destinoI = Paths.get("C:\\Users\\User\\eclipse-workspace\\sonidos\\src\\recursos\\ico\\" + contador + ".jpg");
+					String absolutePathI = destinoI.toString();
+			        try {
+						Files.copy(origenI, destinoI, StandardCopyOption.REPLACE_EXISTING);
+					} catch (IOException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+			        Path origenA = Paths.get(audio);
+					Path destinoA = Paths.get("C:\\Users\\User\\eclipse-workspace\\sonidos\\bin\\recursos\\audio\\audio" + contador + ".mp3");
+					contador++;
+					String absolutePathA = destinoA.toString();
+			        try {
+						Files.copy(origenA, destinoA, StandardCopyOption.REPLACE_EXISTING);
+					} catch (IOException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+					Sonido son = new Sonido(titulo, absolutePathI, absolutePathA, tipo, cliente);
 					son.guardar();
 					dispose();
 				}

@@ -22,7 +22,6 @@ public class Sonido {
 		this.cliente = Cliente.buscarPorId(idCLiente);
 		ps = null;
 		con = new ConexionBD();
-		//Get cliente
 	}
 	
 	public Sonido(String titulo, String imagen, String audio, String tipo, Cliente cliente) {
