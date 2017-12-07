@@ -37,7 +37,6 @@ public class CargarSonido extends JDialog {
 	private JTextField textField_1;
 	private Cliente cliente;
 	File ficheroA, ficheroI;
-	int contador = 0;
 	
 	/**
 	 * Launch the application.
@@ -146,9 +145,10 @@ public class CargarSonido extends JDialog {
 				String audio = textField_1.getText();
 				String tipo = (String) comboBox.getSelectedItem();
 				int cliente = Cliente.getId();
+				int numero = (int) (Math.random() * (1000000-1000000)) + 1000000;
 				if (titulo != "" && imagen != "" && audio != "" && tipo != "" && cliente != 0) {
 					Path origenI = Paths.get(imagen);
-					Path destinoI = Paths.get("C:\\Users\\User\\eclipse-workspace\\sonidos\\src\\recursos\\ico\\" + contador + ".jpg");
+					Path destinoI = Paths.get("C:\\Users\\User\\eclipse-workspace\\sonidos\\src\\recursos\\ico\\imagen" + numero + ".jpg");
 					String absolutePathI = destinoI.toString();
 			        try {
 						Files.copy(origenI, destinoI, StandardCopyOption.REPLACE_EXISTING);
@@ -157,8 +157,7 @@ public class CargarSonido extends JDialog {
 						e.printStackTrace();
 					}
 			        Path origenA = Paths.get(audio);
-					Path destinoA = Paths.get("C:\\Users\\User\\eclipse-workspace\\sonidos\\bin\\recursos\\audio\\audio" + contador + ".mp3");
-					contador++;
+					Path destinoA = Paths.get("C:\\Users\\User\\eclipse-workspace\\sonidos\\bin\\recursos\\audio\\audio" + numero +".mp3");
 					String absolutePathA = destinoA.toString();
 			        try {
 						Files.copy(origenA, destinoA, StandardCopyOption.REPLACE_EXISTING);

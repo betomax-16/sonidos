@@ -50,6 +50,7 @@ public class ComponentAudio extends JPanel {
 				System.out.println(sonido.getId());
 				String SonidoR = sonido.getAudio();
 				reproducir rep = new reproducir(SonidoR);
+				System.out.println(rep.sonar());
 			}
 		});
 		ImageIcon imagen = new ImageIcon(sonido.getImagen());										

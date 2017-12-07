@@ -202,10 +202,9 @@ public class Principal extends JFrame {
 		btnSearch.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				hilo = new Thread(new Runnable() {
-
 					@Override
 					public void run() {						
-						String url = "/recursos/audio/audio.mp3";
+						String url = rep.sonar();
 						try {
 				            FileInputStream fis;		            
 				            fis = new FileInputStream(Principal.class.getResource(url).getPath());
